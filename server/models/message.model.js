@@ -5,6 +5,7 @@ import { Schema, model } from "mongoose";
 const messageSchema = new Schema({
   when: {
     type: Date,
+    // ask for how to do Date
     required: true,
   },
   user: {

@@ -13,8 +13,7 @@ const roomSchema = new Schema({
     required: true,
   },
   addedUsers: {
-    type: Array,
-    required: true,
+    type: String,
   },
 });
 

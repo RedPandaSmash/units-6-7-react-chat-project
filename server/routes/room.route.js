@@ -3,9 +3,11 @@ import { Router } from "express";
 
 const router = Router();
 
-//
+// add new room to chat in
 router.post("/newroom", async (req, res) => {
   const { name, description, addedUsers } = req.body;
+  // need to ask how to get the user by mongo user id
+  // const { addedUsers } = req.user._id;
   //
   try {
     const newRoom = new Room({
