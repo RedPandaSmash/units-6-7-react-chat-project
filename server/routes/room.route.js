@@ -5,8 +5,11 @@ const router = Router();
 
 // add new room to chat in
 router.post("/newroom", async (req, res) => {
-  const { name, description, addedUsers } = req.body;
-  // need to ask how to get the user by mongo user id
+  const { name, description } = req.body;
+  // check if the user is logged in to be able to create a room
+  // add the current user to the array of addedUsers (the users who can access the room and see its messages)
+  let currentUser = await User.findOne;
+
   // const { addedUsers } = req.user._id;
   //
   try {
