@@ -129,7 +129,7 @@ router.delete("/:roomId/:messageId", validateSession, async (req, res) => {
     console.error(error);
     res
       .status(500)
-      .json({ error: "Something went wrong deleting that meesage..." });
+      .json({ error: "Something went wrong deleting that message..." });
   }
 });
 
