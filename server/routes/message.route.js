@@ -1,8 +1,8 @@
-import Message from "../models/message.model";
+import Message from "../models/message.model.js";
 import { Router } from "express";
-import User from "../models/user.model";
-import Room from "../models/room.model";
-import validateSession from "../middleware/validatesession";
+import User from "../models/user.model.js";
+import Room from "../models/room.model.js";
+import validateSession from "../middleware/validatesession.js";
 
 const router = Router();
 
@@ -31,13 +31,12 @@ router.post("/:roomId", validateSession, async (req, res) => {
         .json({ error: "The room you are trying to post in does not exist." });
     }
     // assuming room exists, capture the Id of the user attempting to post the message
-    const { authorId } = req.user._id;
+    const authorId = req.user._id;
     // NOTE: goal was originally to use the user's first and last name as the author, but upon realization that using the ID number is far more practical for validation checks when trying to edit or delete, ID it is.
     const newMessage = new Message({
       user: authorId,
       room: roomId,
       body: content,
-      when: new Date(),
     });
 
     const savedMessage = await newMessage.save();
@@ -81,8 +80,6 @@ router.put("/:roomId/:messageId", validateSession, async (req, res) => {
     }
     // if user has permission to edit, update the message body with the content provided in the req.body
     originalMessage.body = content;
-    // update the message when value to the current date
-    originalMessage.when = new Date();
     // create the new message object to replace the old one
     const editedMessage = await originalMessage.save();
     res

@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
 // Middleware for JWT authentication
 const validateSession = async (req, res, next) => {
@@ -23,4 +24,5 @@ const validateSession = async (req, res, next) => {
     });
   }
 };
+
 export default validateSession;

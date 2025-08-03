@@ -40,7 +40,7 @@ router.post("/newroom", validateSession, async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const rooms = await Rooms.find();
+    const rooms = await Room.find();
     res.status(200).json({
       rooms: rooms,
       message: "Rooms were found",

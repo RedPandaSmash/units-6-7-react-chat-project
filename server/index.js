@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRoutes from "./routes/user.route.js";
 import roomRoutes from "./routes/room.route.js";
+import messageRoutes from "./routes/message.route.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -40,6 +41,9 @@ app.use("/api/users", userRoutes);
 
 // use room routes
 app.use("/api/rooms", roomRoutes);
+
+// use message routes
+app.use("/api/messages", messageRoutes);
 
 app.listen(PORT, () => {
   console.log(`The server is alive beeotch. Port: ${PORT}`);
