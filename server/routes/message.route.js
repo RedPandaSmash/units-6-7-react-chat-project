@@ -10,7 +10,18 @@ const router = Router();
 router.get("/:roomId", async (req, res) => {
   const { roomId } = req.params;
   try {
-    // find all messages in the room and display
+    // find and display all messages with a roomId matching the one provided in the request
+    // a message's room Id is stored in its room key value pair
+    const roomMessages = await Message.find({ room: roomId });
+    // if there are no roomMessages in the room, display a message indicating that the room either has no messages or does not exist
+    if (!roomMessages) {
+      return res.status(404).json({
+        error:
+          "No messages were found in that room. Check the room ID to ensure the room exists.",
+      });
+    }
+    // display all the room messages
+    res.status(200).json({ success: "Messages retrieved!", roomMessages });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "That room does not exist." });
@@ -58,7 +69,7 @@ router.put("/:roomId/:messageId", validateSession, async (req, res) => {
   const { roomId, messageId } = req.params;
   const { content } = req.body;
   // capture the ID of the user attempting to edit the message
-  const { editorId } = req.user._id;
+  const editorId = req.user._id;
   try {
     // validate that the user trying to edit the message is the one who posted it
     // must first use roomId to ensure the room exists
@@ -96,7 +107,7 @@ router.put("/:roomId/:messageId", validateSession, async (req, res) => {
 // delete method to delete a messages within a room while checking to see that the user is the one who posted the message
 router.delete("/:roomId/:messageId", validateSession, async (req, res) => {
   const { roomId, messageId } = req.params;
-  const { deleterId } = req.user._id;
+  const deleterId = req.user._id;
   try {
     //validate that the user trying to delete the message is the one who posted it
     // must first use roomId to ensure the room exists
