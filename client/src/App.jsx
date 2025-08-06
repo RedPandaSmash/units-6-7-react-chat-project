@@ -6,7 +6,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <BasicRouting />
-      App
+      {/* Sanity Check */}
     </BrowserRouter>
   );
 }
