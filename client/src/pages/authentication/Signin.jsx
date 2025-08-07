@@ -1,21 +1,16 @@
 //this component is the auth component in the readme. this will allow the user to either register or log in, which will change dynamically depending on state. When successfully logged in, the localStorage token in the browser's client(see readme) will update, redirecting to the /dashboard route. Use conditional rendering set by buttons to swap between the display for the register form and the login form.
 
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
+import { AuthorizationContext } from "../../App";
 
 export default function Signin() {
   //state to determine whether to show the register form or the login form
   const [returningUser, setReturningUser] = useState(false);
-  // use useEffect and useNavigate to redirect to dashboard upon state change
   const navigate = useNavigate();
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/dashboard");
-      return;
-    }
-  });
+  // bring in react context and update context in the if statement so the App globally can read if the user is logged in(has a token)
+  const { setToken } = useContext(AuthorizationContext);
   // function to toggle state between true and false for conditional rendering
   const toggleForms = () => {
     setReturningUser(!returningUser);
@@ -51,7 +46,13 @@ export default function Signin() {
 
       const data = await res.json();
 
-      alert(data.message);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        setToken(data.token);
+        navigate("/dashboard");
+      } else {
+        alert(data.message);
+      }
 
       // reset form after submission
       setForm({
@@ -128,7 +129,13 @@ export default function Signin() {
 
       const data = await res.json();
 
-      alert(data.message);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        setToken(data.token);
+        navigate("/dashboard");
+      } else {
+        alert(data.message);
+      }
 
       // reset form after submission
       setForm({

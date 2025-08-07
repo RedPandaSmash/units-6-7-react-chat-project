@@ -8,8 +8,14 @@ import Dashboard from "../pages/Dashboard";
 export default function BasicRouting() {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route
+        path="/"
+        element={localStorage.getItem("token") ? <Dashboard /> : <Signin />}
+      />
+      <Route
+        path="/dashboard"
+        element={localStorage.getItem("token") ? <Dashboard /> : <Signin />}
+      />
       <Route path="/signin" element={<Signin />} />{" "}
     </Routes>
   );
