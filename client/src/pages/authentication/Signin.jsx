@@ -1,11 +1,21 @@
 //this component is the auth component in the readme. this will allow the user to either register or log in, which will change dynamically depending on state. When successfully logged in, the localStorage token in the browser's client(see readme) will update, redirecting to the /dashboard route. Use conditional rendering set by buttons to swap between the display for the register form and the login form.
 
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 export default function Signin() {
   //state to determine whether to show the register form or the login form
   const [returningUser, setReturningUser] = useState(false);
+  // use useEffect and useNavigate to redirect to dashboard upon state change
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/dashboard");
+      return;
+    }
+  });
   // function to toggle state between true and false for conditional rendering
   const toggleForms = () => {
     setReturningUser(!returningUser);
