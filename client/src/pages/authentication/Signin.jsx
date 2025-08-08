@@ -1,7 +1,7 @@
 //this component is the auth component in the readme. this will allow the user to either register or log in, which will change dynamically depending on state. When successfully logged in, the localStorage token in the browser's client(see readme) will update, redirecting to the /dashboard route. Use conditional rendering set by buttons to swap between the display for the register form and the login form.
 
 import React from "react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { AuthorizationContext } from "../../App";
 

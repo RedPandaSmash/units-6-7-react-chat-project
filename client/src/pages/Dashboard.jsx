@@ -2,10 +2,15 @@
 // This component is the equivalent of the Rooms Component in the readme
 import React from "react";
 import ExistingRoomsNavigation from "../components/ExistingRoomsNavigation";
+import { useNavigate } from "react-router";
 
 export default function Dashboard() {
+  // hooks
+  const navigate = useNavigate();
   // if user is not logged in, redirect to /signin
-
+  if (!localStorage.token) {
+    navigate("/signin");
+  }
   // if user is logged in
   return (
     <div>
