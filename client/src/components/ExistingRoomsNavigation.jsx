@@ -1,10 +1,12 @@
 // this reusable component will house the navigation bar containing buttons linking to all existing rooms. It will show up on the dashboard page and any page corresponding to a room.
 
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 export default function ExistingRoomsNavigation() {
   // hooks
   const [data, setData] = useState(null);
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -47,7 +49,9 @@ export default function ExistingRoomsNavigation() {
       {data && Array.isArray(data.rooms) ? (
         <ul>
           {data.rooms.map((room) => (
-            <li key={room._id}>{room.name}</li>
+            <li key={room._id} onClick={() => navigate(`/room/${room._id}`)}>
+              {room.name}
+            </li>
           ))}
         </ul>
       ) : (

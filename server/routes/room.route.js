@@ -50,4 +50,17 @@ router.get("/", validateSession, async (req, res) => {
   }
 });
 
+// adding get single room route for client side purposes
+router.get("/:roomId", validateSession, async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.roomId);
+    if (!room) {
+      return res.status(404).json({ error: "Room not found" });
+    }
+    res.json(room);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 export default router;
